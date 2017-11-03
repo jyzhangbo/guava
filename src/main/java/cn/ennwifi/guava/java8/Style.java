@@ -1,4 +1,4 @@
-package cn.ennwifi.guava.java8style;
+package cn.ennwifi.guava.java8;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +9,7 @@ import java.util.List;
  * @author zhangbo
  *
  */
-public class Test1 {
+public class Style {
 
   public static void main(String[] args) {
     List<String> list = new ArrayList<>();
@@ -18,7 +18,7 @@ public class Test1 {
     list.add("alibaba");
     list.add("tengxun");
     list.add("jingdong");
-    Test1 test = new Test1();
+    Style test = new Style();
     test.sortJava8(list);
     System.out.println(list);
 

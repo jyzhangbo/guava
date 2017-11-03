@@ -1,4 +1,4 @@
-package cn.ennwifi.guava.stream;
+package cn.ennwifi.guava.java8.stream;
 
 import java.util.List;
 import java.util.stream.Stream;

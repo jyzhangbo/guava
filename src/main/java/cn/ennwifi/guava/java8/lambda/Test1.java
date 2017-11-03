@@ -1,4 +1,4 @@
-package cn.ennwifi.guava.lambda;
+package cn.ennwifi.guava.java8.lambda;
 
 import java.util.ArrayList;
 import java.util.List;

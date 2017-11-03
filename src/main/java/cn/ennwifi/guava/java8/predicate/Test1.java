@@ -1,4 +1,4 @@
-package cn.ennwifi.guava.predicate;
+package cn.ennwifi.guava.java8.predicate;
 
 import java.util.ArrayList;
 import java.util.List;

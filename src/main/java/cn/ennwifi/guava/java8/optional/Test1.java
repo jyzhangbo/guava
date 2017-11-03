@@ -1,4 +1,4 @@
-package cn.ennwifi.guava.optional;
+package cn.ennwifi.guava.java8.optional;
 
 import java.util.Optional;
 
