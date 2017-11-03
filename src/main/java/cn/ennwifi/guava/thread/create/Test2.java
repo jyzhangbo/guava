@@ -14,9 +14,17 @@ public class Test2 {
     Callable<Integer> callable = new Callable1();
     FutureTask<Integer> futureTask = new FutureTask<>(callable);
     Thread thread = new Thread(futureTask);
+
+    System.out.println(thread.getState().name());
+
     thread.start();
 
+    System.out.println(thread.getState().name());
+
     System.out.println(futureTask.get());
+
+    Thread.sleep(1000);
+    System.out.println(thread.getState().name());
   }
 
 }

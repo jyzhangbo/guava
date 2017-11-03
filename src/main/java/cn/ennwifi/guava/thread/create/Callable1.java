@@ -20,6 +20,7 @@ public class Callable1 implements Callable<Integer> {
       System.out.println(Thread.currentThread().getName() + "-" + i);
       sum += i;
     }
+    System.out.println(Thread.currentThread().getState().name());
     Thread.sleep(5000);
     return sum;
   }
