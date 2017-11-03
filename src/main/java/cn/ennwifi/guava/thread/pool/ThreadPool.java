@@ -1,4 +1,4 @@
-package cn.ennwifi.guava.thread;
+package cn.ennwifi.guava.thread.pool;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -6,6 +6,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 四种线程池的简单介绍.
+ * 
  * @author zhangbo
  *
  */
