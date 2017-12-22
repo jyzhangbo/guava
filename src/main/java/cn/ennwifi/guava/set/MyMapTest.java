@@ -1,4 +1,4 @@
-package cn.ennwifi.guava.map;
+package cn.ennwifi.guava.set;
 
 /**
  * @author zhangbo
