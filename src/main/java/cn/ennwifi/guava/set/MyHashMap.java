@@ -66,15 +66,12 @@ public class MyHashMap {
             p.next = new Node(key, value, hash, null);
             break;
           }
-
           if (p.hashcode == hash && (((k = p.key) == key) || (key != null && key.equals(k)))) {
             break;
           }
-
           p = e;
         }
       }
-
 
       if (e != null) {
         // 如果找到key值、hash值一样的,将原值返回，赋新值
@@ -84,19 +81,93 @@ public class MyHashMap {
       }
     }
 
+    if (++size > threshold) {
+      resize();
+    }
     return value;
   }
 
+  int size;
+  static final int MAXIMUM_CAPACITY = 1 << 30;
+  static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16
+  static final float DEFAULT_LOAD_FACTOR = 0.75f;
+  final float loadFactor = 0.75f;
+  int threshold;
 
+  /**
+   * 1.第一次初始化，oldTab，nodes为null
+   * 
+   */
   private Node[] resize() {
-    if (nodes == null) {
-      nodes = new Node[8];
+    Node[] oldTab = nodes;
+    int oldCap = (oldTab == null) ? 0 : oldTab.length;// 16
+    int oldThr = threshold;// 12
+    int newCap, newThr = 0;
+    if (oldCap > 0) {
+      if (oldCap >= MAXIMUM_CAPACITY) {
+        threshold = Integer.MAX_VALUE;
+        return oldTab;
+      } else if ((newCap = oldCap << 1) < MAXIMUM_CAPACITY && oldCap >= DEFAULT_INITIAL_CAPACITY)
+        newThr = oldThr << 1; // double threshold
+    } else if (oldThr > 0) { // initial capacity was placed in threshold
+      newCap = oldThr;
     } else {
-      int size = nodes.length;
-      size = size * 2;
-      nodes = new Node[size];
+      // 第一次初始化，容量初始值为16，扩容临界值为16*0.75=12
+      newCap = DEFAULT_INITIAL_CAPACITY;
+      newThr = (int) (DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
     }
-    return nodes;
+    if (newThr == 0) {
+      float ft = (float) newCap * loadFactor;
+      newThr = (newCap < MAXIMUM_CAPACITY && ft < (float) MAXIMUM_CAPACITY ? (int) ft : Integer.MAX_VALUE);
+    }
+    threshold = newThr;
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    Node[] newTab = (Node[]) new Node[newCap];
+    nodes = newTab;
+    if (oldTab != null) {
+      for (int j = 0; j < oldCap; ++j) {
+        Node e;
+        if ((e = oldTab[j]) != null) {
+          oldTab[j] = null;
+          if (e.next == null) {
+            // 该node只有一个数，直接重新确定位置
+            newTab[e.hashcode & (newCap - 1)] = e;
+          } else { // preserve order
+            Node loHead = null, loTail = null;
+            Node hiHead = null, hiTail = null;
+            Node next;
+            do {
+              next = e.next;
+              if ((e.hashcode & oldCap) == 0) {
+                // 该节点还在原来的位置
+                if (loTail == null) {
+                  loHead = e;
+                } else {
+                  loTail.next = e;
+                }
+                loTail = e;
+              } else {
+                // 该节点位置发生变化
+                if (hiTail == null)
+                  hiHead = e;
+                else
+                  hiTail.next = e;
+                hiTail = e;
+              }
+            } while ((e = next) != null);
+            if (loTail != null) {
+              loTail.next = null;
+              newTab[j] = loHead;
+            }
+            if (hiTail != null) {
+              hiTail.next = null;
+              newTab[j + oldCap] = hiHead;
+            }
+          }
+        }
+      }
+    }
+    return newTab;
   }
 
 
